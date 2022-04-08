@@ -20,5 +20,7 @@ typedef struct formate
 /* printf functions */
 int _putchar(char c);
 int _printf(const char *format, ...);
+int _putstring(char *s);
+int _putint(int num);
 
 #endif
