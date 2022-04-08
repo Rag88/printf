@@ -13,7 +13,6 @@ int _printf(const char *format, ...)
 	va_list argumento;
 	char letra;
 	char *str;
-	int num;
 
 	va_start(argumento, format);
 
@@ -40,16 +39,6 @@ int _printf(const char *format, ...)
 				break;
 				case '%':
 				count += _putchar('%');
-				i = i + 2;
-				break;
-				case 'd':
-				num = va_arg(argumento, int);
-				count += _putint(num);
-				i = i + 2;
-				break;
-				case 'i':
-				num = va_arg(argumento, int);
-				count += _putint(num);
 				i = i + 2;
 				break;
 			}
