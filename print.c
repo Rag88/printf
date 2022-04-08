@@ -10,12 +10,12 @@ int _printf(const char *format, ...)
 {
 	int i = 0;
 	int count = 0;
-	va_list argumentos;
+	va_list argumento;
 	char letra;
 	char *str;
 	int num;
 
-	va_start(argumentos, format);
+	va_start(argumento, format);
 
 	while (format[i] != '\0')
 	{
@@ -29,12 +29,12 @@ int _printf(const char *format, ...)
 			switch (format[i + 1])
 			{
 				case 'c':
-				letra = va_arg(argumentos, int);
+				letra = va_arg(argumento, int);
 				count += _putchar(letra);
 				i = i + 2;
 				break;
 				case 's':
-				str = va_arg(argumentos, char *);
+				str = va_arg(argumento, char *);
 				count += _putstring(str);
 				i = i + 2;
 				break;
@@ -43,18 +43,18 @@ int _printf(const char *format, ...)
 				i = i + 2;
 				break;
 				case 'd':
-				num = va_arg(argumentos, int);
+				num = va_arg(argumento, int);
 				count += _putint(num);
 				i = i + 2;
 				break;
 				case 'i':
-				num = va_arg(argumentos, int);
+				num = va_arg(argumento, int);
 				count += _putint(num);
 				i = i + 2;
 				break;
 			}
 		}
 	}
-	va_end(argumentos);
+	va_end(argumento);
 	return (count);
 }
