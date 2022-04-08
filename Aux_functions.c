@@ -14,19 +14,19 @@ int _putchar(char c)
 
 /**
  * _putstring - function that prints a string
- * @s: string 
- * Return: count 
+ * @s: string
+ * Return: count
  */
 
 
 int _putstring(char *s)
 {
-    int i = 0, count = 0;
-    
-    while (s[i] != '\0')
-    {
-        count += _putchar(s[i]);
-        i++;
-    }
-    return(count);
+	int i = 0, count = 0;
+
+	while (s[i] != '\0')
+	{
+		count += _putchar(s[i]);
+		i++;
+	}
+	return (count);
 }
