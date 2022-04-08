@@ -1,102 +1,72 @@
 #include "main.h"
 
 /**
- * check_buffer_overflow - if writing over buffer space,
- * print everything then revert length back to 0 to write at buffer start
- * @buffer: buffer holding string to print
- * @len: position in buffer
- * Return: length position
+ * _printf - Function that works as printf
+ * @format: formato
+ * Return: count
  */
-int check_buffer_overflow(char *buffer, int len)
-{
-	if (len > 1020)
-	{
-		write(1, buffer, len);
-		len = 0;
-	}
-	return (len);
-}
 
-/**
- * _printf - mini printf version
- * @format: initial string with all identifiers
- * Return: strings with identifiers expanded
- */
 int _printf(const char *format, ...)
 {
-	int len = 0, total_len = 0, i = 0, j = 0;
-	va_list list;
-	char *buffer, *str;
-	char* (*f)(va_list);
+	/* va_list valist; <- Variable donde se van a almacenar las variadics */
+	/* va_start(); <- Macro que inicia la lista */
+	/* va_arg(nombre, tipo); <- Macro que accede a un dato de la lista */
+	/* va_end(nombre); <- Macro que finaliza la lista cuando acabe */
 
-	if (format == NULL)
-		return (-1);
+	int i = 0;
+    	int count = 0;
+    	va_list argumentos;
+    	char letra;
+    	char *str;
+    	int num;
 
-	buffer = create_buffer();
-	if (buffer == NULL)
-		return (-1);
-
-	va_start(list, format);
+	va_start(argumentos, format); /* nombre de la variable, el ultimo argumento con nombre */    
 
 	while (format[i] != '\0')
 	{
-		if (format[i] != '%') /* copy format into buffer until '%' */
-		{
-			len = check_buffer_overflow(buffer, len);
-			buffer[len++] = format[i++];
-			total_len++;
-		}
-		else /* if %, find function */
-		{
-			i++;
-			if (format[i] == '\0') /* handle single ending % */
-			{
-				va_end(list);
-				free(buffer);
-				return (-1);
-			}
-			if (format[i] == '%') /* handle double %'s */
-			{
-				len = check_buffer_overflow(buffer, len);
-				buffer[len++] = format[i];
-				total_len++;
-			}
-			else
-			{
-				f = get_func(format[i]); /* grab function */
-				if (f == NULL)  /* handle fake id */
-				{
-					len = check_buffer_overflow(buffer, len);
-					buffer[len++] = '%'; total_len++;
-					buffer[len++] = format[i]; total_len++;
-				}
-				else /* return string, copy to buffer */
-				{
-					str = f(list);
-					if (str == NULL)
-					{
-						va_end(list);
-						free(buffer);
-						return (-1);
-					}
-					if (format[i] == 'c' && str[0] == '\0')
-					{
-						len = check_buffer_overflow(buffer, len);
-						buffer[len++] = '\0';
-						total_len++;
-					}
-					j = 0;
-					while (str[j] != '\0')
-					{
-						len = check_buffer_overflow(buffer, len);
-						buffer[len++] = str[j];
-						total_len++; j++;
-					}
-					free(str);
-				}
-			} i++;
-		}
-	}
-	write_buffer(buffer, len, list);
-	return (total_len);
-}
+        if (format[i] != '%')
+        {
+            /* Impresiones regulares */
+            count += _putchar(format[i]);
+            i++;
+        }
+        else
+        {
+            switch(format[i + 1])
+            { 
+                /* En los casos del switch es donde usaremos los va_args */
+                case 'c':
+                    letra = va_arg(argumentos, int);
+                    count += _putchar(letra);
+                    i = i + 2;
+                    break;
+                
+                case 's':
+                    str = va_arg(argumentos, char *);
+                    count += _putstring(str);
+                    i = i + 2;
+                    break;
+                    
+                case '%':
+                    count += _putchar('%');
+                    i = i + 2;
+                    break;
+                    
+                case 'd':
+                    num = va_arg(argumentos, int);
+                    count += _putint(num);
+                    i = i + 2;
+                    break;
+                    
+                case 'i':
+                    num = va_arg(argumentos, int);
+                    count += _putint(num);
+                    i = i + 2;
+                    break;
+            }
+            
+        }
+    }
+    va_end(argumentos);
+    return (count);
+}    
