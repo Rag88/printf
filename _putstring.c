@@ -56,18 +56,3 @@ int _putint(int num)
 	}
 	return (count);
 }
-<<<<<<< HEAD
-=======
-/**
- * _putchar - writes the character c to stdout
- * @c: The character to print
- *
- * Return: on success 1.
- * On error, -1 is returned, and errno is set approprietaly.
- */
-
-int _putchar(char c)
-{
-	return (write(1, &c, 1));
-}
->>>>>>> 44e72947d971e4d7d0300eac516fc0a0389d5272
