@@ -2,7 +2,7 @@
 
 /**
  * _printf - Function that works as printf
- * @format: it's the format
+ * @format: it's the format.
  * Return: count
  */
 
