@@ -8,23 +8,25 @@
 
 int _printf(const char *format, ...)
 {
-	int i = 0;
-	int count = 0;
+	unsigned int i = 0, count = 0;
 	va_list argumento;
 	char letra;
 	char *str;
 
 	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
-	return (-1);
+		return (-1);
 	va_start(argumento, format);
 
-	while (format[i] != '\0')
+	while (format[i])
 	{
-		if (format[i] != '%')
+		for (; format[i] && format[i] != '%'; i++)
 		{
-			count += _putchar(format[i]);
-				i++;
+			_putchar(format[i]);
+			count++;
 		}
+		if (!format[i])
+			return (count);
+
 		else
 		{
 			switch (format[i + 1])
