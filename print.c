@@ -17,16 +17,13 @@ int _printf(const char *format, ...)
 		return (-1);
 	va_start(argumento, format);
 
-	while (format[i])
+	while (format[i] && format)
 	{
-		for (; format[i] && format[i] != '%'; i++)
+		if (format[i] != '%')
 		{
-			_putchar(format[i]);
-			count++;
+			count += _putchar(format[i]);
+			i++;
 		}
-		if (!format[i])
-			return (count);
-
 		else
 		{
 			switch (format[i + 1])
